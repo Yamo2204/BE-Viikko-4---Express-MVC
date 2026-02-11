@@ -3,6 +3,9 @@
 
 import promisePool from '../utils/database.js';
 
+// Sanitoi undefined-arvot null:iksi
+const sanitize = (value) => value === undefined || value === '' ? null : value;
+
 // Hae kaikki lääkkeet
 const listAllMedications = async () => {
   try {
@@ -44,7 +47,7 @@ const addMedication = async (medication) => {
   const { user_id, name, dosage, frequency, start_date, end_date, notes } = medication;
   const sql = `INSERT INTO Medications (user_id, name, dosage, frequency, start_date, end_date, notes, created_at)
                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
-  const params = [user_id, name, dosage, frequency, start_date, end_date, notes];
+  const params = [sanitize(user_id), sanitize(name), sanitize(dosage), sanitize(frequency), sanitize(start_date), sanitize(end_date), sanitize(notes)];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Lääke lisätty:', result[0].insertId);
@@ -61,7 +64,7 @@ const updateMedication = async (id, medication) => {
   const sql = `UPDATE Medications 
                SET name = ?, dosage = ?, frequency = ?, start_date = ?, end_date = ?, notes = ?, updated_at = NOW()
                WHERE medication_id = ?`;
-  const params = [name, dosage, frequency, start_date, end_date, notes, id];
+  const params = [sanitize(name), sanitize(dosage), sanitize(frequency), sanitize(start_date), sanitize(end_date), sanitize(notes), id];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Lääke päivitetty:', result[0].affectedRows);

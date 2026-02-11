@@ -4,6 +4,9 @@
 
 import promisePool from '../utils/database.js';
 
+// Sanitoi undefined-arvot null:iksi
+const sanitize = (value) => value === undefined || value === '' ? null : value;
+
 // Hae kaikki käyttäjät
 const listAllUsers = async () => {
   try {
@@ -33,7 +36,7 @@ const addUser = async (user) => {
   const { username, email, password, age } = user;
   const sql = `INSERT INTO Users (username, email, password, age, created_at)
                VALUES (?, ?, ?, ?, NOW())`;
-  const params = [username, email, password, age];
+  const params = [sanitize(username), sanitize(email), sanitize(password), sanitize(age)];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Käyttäjä lisätty:', result[0].insertId);
@@ -50,7 +53,7 @@ const updateUser = async (id, user) => {
   const sql = `UPDATE Users 
                SET username = ?, email = ?, age = ?, updated_at = NOW()
                WHERE user_id = ?`;
-  const params = [username, email, age, id];
+  const params = [sanitize(username), sanitize(email), sanitize(age), id];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Käyttäjä päivitetty:', result[0].affectedRows);

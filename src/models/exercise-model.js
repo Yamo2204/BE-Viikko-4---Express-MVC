@@ -3,6 +3,9 @@
 
 import promisePool from '../utils/database.js';
 
+// Sanitoi undefined-arvot null:iksi
+const sanitize = (value) => value === undefined || value === '' ? null : value;
+
 // Hae kaikki harjoitukset
 const listAllExercises = async () => {
   try {
@@ -44,7 +47,7 @@ const addExercise = async (exercise) => {
   const { user_id, exercise_date, exercise_type, duration_minutes, intensity, calories_burned, notes } = exercise;
   const sql = `INSERT INTO Exercises (user_id, exercise_date, exercise_type, duration_minutes, intensity, calories_burned, notes, created_at)
                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
-  const params = [user_id, exercise_date, exercise_type, duration_minutes, intensity, calories_burned, notes];
+  const params = [sanitize(user_id), sanitize(exercise_date), sanitize(exercise_type), sanitize(duration_minutes), sanitize(intensity), sanitize(calories_burned), sanitize(notes)];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Harjoitus lisätty:', result[0].insertId);
@@ -61,7 +64,7 @@ const updateExercise = async (id, exercise) => {
   const sql = `UPDATE Exercises 
                SET exercise_date = ?, exercise_type = ?, duration_minutes = ?, intensity = ?, calories_burned = ?, notes = ?, updated_at = NOW()
                WHERE exercise_id = ?`;
-  const params = [exercise_date, exercise_type, duration_minutes, intensity, calories_burned, notes, id];
+  const params = [sanitize(exercise_date), sanitize(exercise_type), sanitize(duration_minutes), sanitize(intensity), sanitize(calories_burned), sanitize(notes), id];
   try {
     const result = await promisePool.execute(sql, params);
     console.log('Harjoitus päivitetty:', result[0].affectedRows);
