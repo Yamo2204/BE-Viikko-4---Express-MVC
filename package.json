@@ -6,7 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "test:robot": "robot -d outputs tests",
+    "tidy:robot": "robotidy tests"
   },
   "keywords": ["express", "mvc", "diary", "mysql", "database"],
   "author": "",
