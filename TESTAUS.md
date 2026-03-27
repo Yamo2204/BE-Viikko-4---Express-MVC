@@ -1,74 +1,75 @@
 # TESTAUS
 
-Tama tiedosto dokumentoi Robot Framework -testauksen tasta projektista.
+Tässä dokumentissa kerron vähän siitä, miten tein tämän projektin testauksen Robot Frameworkilla.
 
-## Testiymparisto
+Testiympäristö
 
-- OS: Windows
-- Backend: Node.js + Express
-- Testityokalu: Robot Framework
-- Kirjastot: RequestsLibrary
-- API base URL: `http://localhost:3000`
+# Testasin tätä omalla koneella seuraavilla:
 
-## Testikansiot
+OS: Windows
+Backend: Node.js + Express
+Testityökalu: Robot Framework
+Kirjastot: RequestsLibrary ja Browser (Playwright)
+API osoite: http://localhost:3000
+Testikansiot
 
-- Testit: `tests/api_homework.robot`
-- Resurssit: `tests/resources/api_common.resource`
-- Tulokset: `outputs/`
+# Testit löytyy näistä:
 
-## Suoritusohje
+tests/api_homework.robot
+tests/login_test.robot
+tests/webform_test.robot
 
-1. Kaynnista backend:
+Resurssit on kansiossa tests/resources/ ja testien tulokset menee kansioon outputs/.
 
-```bash
+Miten testit ajetaan
+Ensin pitää käynnistää backend:
 npm start
-```
-
-2. Aja Robot-testit:
-
-```bash
+Sitten voi ajaa kaikki testit:
 robot -d outputs tests
-```
+Tai jos haluaa ajaa vain yhden:
+robot -d outputs tests/login_test.robot
+robot -d outputs tests/webform_test.robot
+Lopuksi raportit löytyy outputs-kansiosta.
+Testit
+api_homework.robot
 
-3. Avaa raportit:
+# Tässä testasin API:n perusjuttuja:
 
-- `outputs/report.html`
-- `outputs/log.html`
-- `outputs/output.xml`
+/ toimii ja palauttaa JSONin
+väärä reitti antaa 404
+/api/users vastaa (sallin myös 500 ettei testi kaadu turhaan)
+POST-reiteissä tarkistin, että jos pakolliset kentät puuttuu → tulee 400
+login_test.robot
 
-## Testitapaukset
+# Tässä testasin kirjautumista:
 
-1. `Root Endpoint Returns Welcome Json`
-- Tarkistaa etta `/` palauttaa statuskoodin 200 ja JSON-rakenteen.
+tyhjä login → 400
+ilman salasanaa → 400
+ilman usernamea → 400
+väärät tunnukset → 401
+oikeat tunnukset → 200
 
-2. `Unknown Route Returns 404 Json`
-- Tarkistaa etta tuntematon reitti palauttaa 404 ja virhe-JSONin.
+Tein myös niin, että testi luo käyttäjän itse ja poistaa sen lopuksi.
 
-3. `Users Endpoint Is Reachable`
-- Tarkistaa etta `/api/users` vastaa (200 tai 500 sallittu, jotta testi ei riipu tietokannan tilasta).
+webform_test.robot
 
-4. `Create User Without Required Fields Returns 400`
-- Tarkistaa validoinnin puuttuvilla kentilla.
+# Tässä testasin lomaketta selaimessa:
 
-5. `Create Medication Without Required Fields Returns 400`
-- Tarkistaa validoinnin puuttuvilla kentilla.
+dropdown toimii
+datalist hyväksyy arvot
+file upload toimii
+checkbox toimii (voi valita ja poistaa valinnan)
+radio button toimii oikein (vain yksi kerrallaan)
+Viimeisin tulos
 
-6. `Create Exercise Without Required Fields Returns 400`
-- Tarkistaa validoinnin puuttuvilla kentilla.
+# Päivämäärä: 27.03.2026
 
-7. `Create Entry Without Required Fields Returns 400`
-- Tarkistaa validoinnin puuttuvilla kentilla.
-
-## Viimeisin tulos
-
-Ajo paivamaara: 2026-03-23
-
-- Yhteensa: 7
-- Lapi: 7
-- Epaonnistui: 0
-
-## Havainnot
-
-- API vastasi oikein juurireitilla ja virhereitilla.
-- Pakollisten kenttien validointi toimii testatuissa POST-reiteissa.
-- Testit on suunniteltu niin, etteivat ne tarvitse tiettya seed-dataa onnistumiseen.
+Testejä: 20
+Läpi: -
+Fail: -
+Oma huomio
+API toimi ihan hyvin perus tapauksissa
+validointi toimii kun kenttiä puuttuu
+login-testit toimii itsenäisesti
+ei tarvitse valmista dataa
+selain testit meni nopeammin headless-tilassa

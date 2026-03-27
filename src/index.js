@@ -7,6 +7,7 @@ import entryRouter from './routes/entry-router.js';
 import userRouter from './routes/user-router.js';
 import medicationRouter from './routes/medication-router.js';
 import exerciseRouter from './routes/exercise-router.js';
+import authRouter from './routes/auth-router.js';
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use('/api/entries', entryRouter);
 app.use('/api/users', userRouter);
 app.use('/api/medications', medicationRouter);
 app.use('/api/exercises', exerciseRouter);
+app.use('/api/auth', authRouter);
 
 // Testitie
 app.get('/', (req, res) => {

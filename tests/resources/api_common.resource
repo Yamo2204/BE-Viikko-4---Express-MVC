@@ -21,6 +21,11 @@ Post Endpoint With Json
     ${response}=    POST On Session    backend    ${endpoint}    json=${payload}    headers=${headers}    expected_status=any
     RETURN    ${response}
 
+Delete Endpoint
+    [Arguments]    ${endpoint}
+    ${response}=    DELETE On Session    backend    ${endpoint}    expected_status=any
+    RETURN    ${response}
+
 Response Should Be Json
     [Arguments]    ${response}
     ${content_type}=    Get From Dictionary    ${response.headers}    Content-Type

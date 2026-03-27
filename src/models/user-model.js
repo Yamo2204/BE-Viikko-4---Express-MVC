@@ -77,4 +77,18 @@ const deleteUser = async (id) => {
   }
 };
 
-export { listAllUsers, findUserById, addUser, updateUser, deleteUser };
+// Tarkista kirjautumistiedot
+const findUserByCredentials = async (username, password) => {
+  try {
+    const [rows] = await promisePool.execute(
+      'SELECT user_id, username, email FROM Users WHERE username = ? AND password = ?',
+      [username, password]
+    );
+    return rows[0] || null;
+  } catch (e) {
+    console.error('Virhe kirjautumisessa:', e.message);
+    return { error: e.message };
+  }
+};
+
+export { listAllUsers, findUserById, addUser, updateUser, deleteUser, findUserByCredentials };

@@ -1,0 +1,2 @@
+Tämä on Robot Framework -testin käyttämä testitiedosto.
+Tiedostoa käytetään file input -kentän testaamiseen.
