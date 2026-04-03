@@ -1,75 +1,134 @@
 # TESTAUS
 
-Tässä dokumentissa kerron vähän siitä, miten tein tämän projektin testauksen Robot Frameworkilla.
+Tässä dokumentissa kerron miten tein tämän projektin testauksen Robot Frameworkilla.
 
-Testiympäristö
+## Testiympäristö
 
-# Testasin tätä omalla koneella seuraavilla:
+- OS: Windows
+- Backend: Node.js + Express
+- Testityökalu: Robot Framework
+- Kirjastot: RequestsLibrary, Browser (Playwright), CryptoLibrary
+- API osoite: http://localhost:3000
 
-OS: Windows
-Backend: Node.js + Express
-Testityökalu: Robot Framework
-Kirjastot: RequestsLibrary ja Browser (Playwright)
-API osoite: http://localhost:3000
-Testikansiot
+## Miten testit ajetaan
 
-# Testit löytyy näistä:
+Ensin käynnistä backend:
 
-tests/api_homework.robot
-tests/login_test.robot
-tests/webform_test.robot
-
-Resurssit on kansiossa tests/resources/ ja testien tulokset menee kansioon outputs/.
-
-Miten testit ajetaan
-Ensin pitää käynnistää backend:
+```bash
 npm start
-Sitten voi ajaa kaikki testit:
+```
+
+Sitten aja testit:
+
+```bash
 robot -d outputs tests
-Tai jos haluaa ajaa vain yhden:
-robot -d outputs tests/login_test.robot
-robot -d outputs tests/webform_test.robot
-Lopuksi raportit löytyy outputs-kansiosta.
-Testit
-api_homework.robot
+```
 
-# Tässä testasin API:n perusjuttuja:
+Raportit löytyy kansiosta [outputs/](outputs/).
 
-/ toimii ja palauttaa JSONin
-väärä reitti antaa 404
-/api/users vastaa (sallin myös 500 ettei testi kaadu turhaan)
-POST-reiteissä tarkistin, että jos pakolliset kentät puuttuu → tulee 400
-login_test.robot
+---
 
-# Tässä testasin kirjautumista:
+## Tehtävä 1
 
-tyhjä login → 400
-ilman salasanaa → 400
-ilman usernamea → 400
-väärät tunnukset → 401
-oikeat tunnukset → 200
+Asenna omalle koneellesi seuraavat työkalut:
 
-Tein myös niin, että testi luo käyttäjän itse ja poistaa sen lopuksi.
+- Robot Framework
+- Browser Library
+- Requests library
+- CryptoLibrary
+- Robotidy
 
-webform_test.robot
+Asensin kaikki työkalut Python-virtuaaliympäristöön (`.venv`). Asennus onnistui ongelmitta. Käytin seuraavia komentoja:
 
-# Tässä testasin lomaketta selaimessa:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install robotframework
+pip install robotframework-requests
+pip install robotframework-browser
+rfbrowser init
+pip install robotframework-crypto
+pip install robotframework-tidy
+```
 
-dropdown toimii
-datalist hyväksyy arvot
-file upload toimii
-checkbox toimii (voi valita ja poistaa valinnan)
-radio button toimii oikein (vain yksi kerrallaan)
-Viimeisin tulos
+Asennetut versiot:
 
-# Päivämäärä: 27.03.2026
+| Työkalu | Versio |
+|---------|--------|
+| Robot Framework | 7.4.2 |
+| RequestsLibrary | 0.9.7 |
+| Browser Library | 19.12.7 |
+| CryptoLibrary | 0.4.2 |
+| Robotidy | 4.18.0 |
 
-Testejä: 20
-Läpi: -
-Fail: -
-Oma huomio
-API toimi ihan hyvin perus tapauksissa
-validointi toimii kun kenttiä puuttuu
-login-testit toimii itsenäisesti
-ei tarvitse valmista dataa
-selain testit meni nopeammin headless-tilassa
+Kaikki asennukset onnistuivat. Testitiedosto: [tests/api_homework.robot](tests/api_homework.robot)
+
+Testasin API:n perustoimintaa:
+
+- `/` toimii ja palauttaa JSONin
+- Väärä reitti antaa 404
+- `/api/users` vastaa (sallin myös 500)
+- POST-reiteissä puuttuvat kentät → 400
+
+## Tehtävä 2
+
+Tein kirjautumistestin omalle terveyspäiväkirja-sovellukselleni.
+
+Testitiedosto: [tests/login_test.robot](tests/login_test.robot)
+
+Testasin kirjautumista eri skenaarioilla:
+
+- Tyhjä login → 400
+- Ilman salasanaa → 400
+- Ilman käyttäjätunnusta → 400
+- Väärät tunnukset → 401
+- Oikeat tunnukset → 200
+
+Testi luo käyttäjän itse ennen testiä ja poistaa sen lopuksi.
+
+## Tehtävä 3
+
+Tutkin Browser Libraryn käyttöä ja tein testin web-lomakkeen kentille.(Dropdown (select), Dropdown (datalist), File input, Checkboxit, Radio buttonit, jne).
+
+Testitiedosto: [tests/webform_test.robot](tests/webform_test.robot)
+
+Testasin lomaketta selaimessa:
+
+- Dropdown toimii
+- Datalist hyväksyy arvot
+- File upload toimii
+- Checkbox toimii (voi valita ja poistaa valinnan)
+- Radio button toimii oikein (vain yksi kerrallaan)
+
+## Tehtävä 4
+
+Tein testin uuden päiväkirjamerkinnän lisäämisestä omalle terveyspäiväkirja-sovellukselleni.
+
+Testitiedosto: [tests/api_homework.robot](tests/api_homework.robot)
+
+Testi luo ensin testikäyttäjän, lisää uuden päiväkirjamerkinnän (`POST /api/entries`) ja tarkistaa että vastaus on 201 ja sisältää `entry_id`. Lopuksi testi poistaa sekä merkinnän että käyttäjän automaattisesti.
+
+## Tehtävä 5
+
+Tein kirjautumistestin, joka lukee käyttäjätunnuksen ja salasanan `.env`-tiedostosta.
+
+Testitiedosto: [tests/login_env_test.robot](tests/login_env_test.robot)
+
+Käyttäjätunnus ja salasana on tallennettu `.env`-tiedostoon muuttujina `TEST_USERNAME` ja `TEST_PASSWORD`. Testi lukee ne automaattisesti tiedostosta ilman että ne näkyvät testikoodissa.
+
+## Tehtävä 6
+
+Tein kirjautumistestin jossa käyttäjätunnus ja salasana on kryptattu CryptoLibraryn avulla.
+
+Testitiedosto: [tests/login_crypto_test.robot](tests/login_crypto_test.robot)
+
+Generoin NaCl-avainparin CryptoLibraryn avulla. Käyttäjätunnus ja salasana on kryptattu ja tallennettu testiin `crypt:`-etuliitteellä. CryptoLibrary purkaa ne automaattisesti testin ajon aikana yksityisavaimella.
+
+## Oma huomio
+
+- API toimi ihan hyvin perus tapauksissa
+- Validointi toimii kun kenttiä puuttuu
+- Login-testit toimii itsenäisesti, ei tarvitse valmista dataa
+- Selain testit meni nopeammin headless-tilassa
+- `.env`-tiedosto piilottaa tunnukset versionhallinnasta
+- CryptoLibrary suojaa tunnukset myös testitiedostoissa

@@ -46,3 +46,38 @@ Create Entry Without Required Fields Returns 400
     ${payload}=    Create Dictionary    user_id=1
     ${response}=    Post Endpoint With Json    /api/entries    ${payload}
     Should Be Equal As Integers    ${response.status_code}    400
+
+Create New Diary Entry Successfully Returns 201
+    [Documentation]    Tehtävä 4 – Luo testikäyttäjä, lisää uusi päiväkirjamerkintä,
+    ...                varmista 201-vastaus ja siivoa molemmat pois.
+    # 1. Luo testikäyttäjä
+    ${timestamp}=    Get Time    epoch
+    ${unique_user}=    Set Variable    entrytest_${timestamp}
+    ${reg_payload}=    Create Dictionary
+    ...    username=${unique_user}
+    ...    email=${unique_user}@test.com
+    ...    password=Salasana123
+    ${reg_response}=    Post Endpoint With Json    /api/users    ${reg_payload}
+    Should Be Equal As Integers    ${reg_response.status_code}    201
+    ${user_id}=    Set Variable    ${reg_response.json()['user_id']}
+
+    # 2. Lisää uusi päiväkirjamerkintä
+    ${entry_payload}=    Create Dictionary
+    ...    user_id=${user_id}
+    ...    entry_date=2026-04-03
+    ...    mood=Hyvä
+    ...    weight=75.5
+    ...    sleep_hours=8
+    ...    notes=Testimerkintä Robot Frameworkilla
+    ${entry_response}=    Post Endpoint With Json    /api/entries    ${entry_payload}
+    Should Be Equal As Integers    ${entry_response.status_code}    201
+    Response Should Be Json    ${entry_response}
+    Dictionary Should Contain Key    ${entry_response.json()}    message
+    Dictionary Should Contain Key    ${entry_response.json()}    entry_id
+    ${entry_id}=    Set Variable    ${entry_response.json()['entry_id']}
+
+    # 3. Siivoa – poista merkintä ja käyttäjä
+    ${del_entry}=    Delete Endpoint    /api/entries/${entry_id}
+    Should Be Equal As Integers    ${del_entry.status_code}    200
+    ${del_user}=    Delete Endpoint    /api/users/${user_id}
+    Should Be Equal As Integers    ${del_user.status_code}    200

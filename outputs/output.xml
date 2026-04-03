@@ -1,554 +1,273 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.4.2 (Python 3.13.3 on win32)" generated="2026-03-23T13:42:54.890801" rpa="false" schemaversion="5">
-<suite id="s1" name="Tests" source="C:\Users\yamam\OneDrive\Desktop\BE-Viikko 4 - Express-MVC\tests">
-<suite id="s1-s1" name="Api Homework" source="C:\Users\yamam\OneDrive\Desktop\BE-Viikko 4 - Express-MVC\tests\api_homework.robot">
+<robot generator="Robot 7.4.2 (Python 3.13.3 on win32)" generated="2026-04-03T21:03:13.042088" rpa="false" schemaversion="5">
+<suite id="s1" name="Login Crypto Test" source="C:\Users\yamam\OneDrive\Desktop\BE-Viikko 4 - Express-MVC\tests\login_crypto_test.robot">
 <kw name="Create Backend Session" owner="api_common" type="SETUP">
 <kw name="Create Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.260879" level="INFO">Creating Session using : alias=backend, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2026-04-03T21:03:13.995563" level="INFO">Creating Session using : alias=backend, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
 <arg>backend</arg>
 <arg>${BASE_URL}</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<status status="PASS" start="2026-03-23T13:42:55.260294" elapsed="0.000869"/>
+<status status="PASS" start="2026-04-03T21:03:13.995102" elapsed="0.001009"/>
 </kw>
-<status status="PASS" start="2026-03-23T13:42:55.259532" elapsed="0.001760"/>
+<status status="PASS" start="2026-04-03T21:03:13.993636" elapsed="0.002697"/>
 </kw>
-<test id="s1-s1-t1" name="Root Endpoint Returns Welcome Json" line="8">
-<kw name="Get Endpoint" owner="api_common">
-<kw name="GET On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.284153" level="INFO">GET Request : url=http://localhost:3000/ 
- path_url=/ 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
+<test id="s1-t1" name="Login With Encrypted Credentials Returns 200" line="24">
+<kw name="Prepare Crypto Test User" type="SETUP">
+<kw name="Get Decrypted Text" owner="CryptoLibrary">
+<msg time="2026-04-03T21:03:13.999338" level="INFO">Decrypting text and return value.</msg>
+<msg time="2026-04-03T21:03:14.941252" level="INFO">${plain_user} = "***"</msg>
+<var>${plain_user}</var>
+<arg>${ENC_USERNAME}</arg>
+<doc>Decrypts cipher text and returns the plain text.</doc>
+<status status="PASS" start="2026-04-03T21:03:13.998935" elapsed="0.942908"/>
+</kw>
+<kw name="Get Decrypted Text" owner="CryptoLibrary">
+<msg time="2026-04-03T21:03:14.942382" level="INFO">Decrypting text and return value.</msg>
+<msg time="2026-04-03T21:03:14.942778" level="INFO">${plain_pass} = "***"</msg>
+<var>${plain_pass}</var>
+<arg>${ENC_PASSWORD}</arg>
+<doc>Decrypts cipher text and returns the plain text.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.942108" elapsed="0.000955"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.943906" level="INFO">${PLAIN_USERNAME} = "***"</msg>
+<arg>${PLAIN_USERNAME}</arg>
+<arg>${plain_user}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.943261" elapsed="0.000838"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.944860" level="INFO">${PLAIN_PASSWORD} = "***"</msg>
+<arg>${PLAIN_PASSWORD}</arg>
+<arg>${plain_pass}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.944279" elapsed="0.000774"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.946141" level="INFO">${payload} = "***"</msg>
+<var>${payload}</var>
+<arg>username=${plain_user}</arg>
+<arg>email=${plain_user}@cryptotest.com</arg>
+<arg>password=${plain_pass}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.945249" elapsed="0.001068"/>
+</kw>
+<kw name="Post Endpoint With Json" owner="api_common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.947629" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.947132" elapsed="0.000689"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-04-03T21:03:14.968887" level="INFO">POST Request : url=http://localhost:3000/api/users 
+ path_url=/api/users 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '94'} 
+ body=b'{"username": "***", "email": "***@cryptotest.com", "password": "***"}' 
  </msg>
-<msg time="2026-03-23T13:42:55.284459" level="INFO">GET Response : url=http://localhost:3000/ 
- status=200, reason=OK 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '305', 'ETag': 'W/"131-Zv+RScIerPq1JpKF2uS059VPVrQ"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body={"message":"Tervetuloa päiväkirjasovellukseen!","version":"1.0.0","endpoints":{"entries":"GET /api/entries - Hae kaikki merkinnät","user":"GET /api/users - Hae kaikki käyttäjät","medications":"GET /api/medications - Hae kaikki lääkkeet","exercises":"GET /api/exercises - Hae kaikki harjoitukset"}} 
+<msg time="2026-04-03T21:03:14.969228" level="INFO">POST Response : url=http://localhost:3000/api/users 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '53', 'ETag': 'W/"35-8sAxeLP685AOc026Cifr3YTEFR0"', 'Date': 'Fri, 03 Apr 2026 18:03:14 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"message":"Uusi käyttäjä lisätty.","user_id":11} 
  </msg>
-<msg time="2026-03-23T13:42:55.284817" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<msg time="2026-04-03T21:03:14.969543" level="INFO">${response} = &lt;Response [201]&gt;</msg>
 <var>${response}</var>
 <arg>backend</arg>
 <arg>${endpoint}</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
 <arg>expected_status=any</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.262913" elapsed="0.021970"/>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.948011" elapsed="0.021789"/>
 </kw>
 <return>
 <value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.285048" elapsed="0.000128"/>
+<status status="PASS" start="2026-04-03T21:03:14.969992" elapsed="0.000122"/>
 </return>
-<msg time="2026-03-23T13:42:55.286111" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<msg time="2026-04-03T21:03:14.970435" level="INFO">${response} = &lt;Response [201]&gt;</msg>
 <var>${response}</var>
-<arg>/</arg>
-<status status="PASS" start="2026-03-23T13:42:55.262395" elapsed="0.023953"/>
+<arg>/api/users</arg>
+<arg>${payload}</arg>
+<status status="PASS" start="2026-04-03T21:03:14.946635" elapsed="0.024027"/>
 </kw>
 <kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.288518" level="INFO">Argument types are:
+<msg time="2026-04-03T21:03:14.972327" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.970947" elapsed="0.001582"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.974325" level="INFO">${CRYPTO_USER_ID} = 11</msg>
+<arg>${CRYPTO_USER_ID}</arg>
+<arg>${response.json()['user_id']}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.972840" elapsed="0.001804"/>
+</kw>
+<doc>Purkaa kryptatut muuttujat ja luo testikäyttäjän.</doc>
+<status status="PASS" start="2026-04-03T21:03:13.998112" elapsed="0.976692"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.976485" level="INFO">${payload} = "***"</msg>
+<var>${payload}</var>
+<arg>username=${PLAIN_USERNAME}</arg>
+<arg>password=${PLAIN_PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.975398" elapsed="0.001374"/>
+</kw>
+<kw name="Post Endpoint With Json" owner="api_common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-03T21:03:14.980212" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.978947" elapsed="0.001585"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-04-03T21:03:14.991754" level="INFO">POST Request : url=http://localhost:3000/api/auth/login 
+ path_url=/api/auth/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'} 
+ body=b'{"username": "***", "password": "***"}' 
+ </msg>
+<msg time="2026-04-03T21:03:14.992007" level="INFO">POST Response : url=http://localhost:3000/api/auth/login 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '73', 'ETag': 'W/"49-pwoxSZHMynwjE1yNpATa5Dg6D4c"', 'Date': 'Fri, 03 Apr 2026 18:03:14 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"message":"Kirjautuminen onnistui","user_id":11,"username":"***"} 
+ </msg>
+<msg time="2026-04-03T21:03:14.992837" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>backend</arg>
+<arg>${endpoint}</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-03T21:03:14.981025" elapsed="0.012111"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2026-04-03T21:03:14.993331" elapsed="0.000116"/>
+</return>
+<msg time="2026-04-03T21:03:14.993890" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>/api/auth/login</arg>
+<arg>${payload}</arg>
+<status status="PASS" start="2026-04-03T21:03:14.977641" elapsed="0.016558"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-04-03T21:03:15.000149" level="INFO">Argument types are:
 &lt;class 'int'&gt;
 &lt;class 'str'&gt;</msg>
 <arg>${response.status_code}</arg>
 <arg>200</arg>
 <doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.286980" elapsed="0.001691"/>
+<status status="PASS" start="2026-04-03T21:03:14.998476" elapsed="0.001859"/>
 </kw>
 <kw name="Response Should Be Json" owner="api_common">
 <kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.291116" level="INFO">${content_type} = application/json; charset=utf-8</msg>
+<msg time="2026-04-03T21:03:15.003393" level="INFO">${content_type} = application/json; charset=utf-8</msg>
 <var>${content_type}</var>
 <arg>${response.headers}</arg>
 <arg>Content-Type</arg>
 <doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.289942" elapsed="0.001259"/>
+<status status="PASS" start="2026-04-03T21:03:15.002126" elapsed="0.001645"/>
 </kw>
 <kw name="Should Contain" owner="BuiltIn">
 <arg>${content_type}</arg>
 <arg>application/json</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.291499" elapsed="0.001049"/>
+<status status="PASS" start="2026-04-03T21:03:15.004094" elapsed="0.000987"/>
 </kw>
 <arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.289273" elapsed="0.003482"/>
+<status status="PASS" start="2026-04-03T21:03:15.001128" elapsed="0.004164"/>
 </kw>
 <kw name="Dictionary Should Contain Key" owner="Collections">
 <arg>${response.json()}</arg>
 <arg>message</arg>
 <doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.293200" elapsed="0.000945"/>
+<status status="PASS" start="2026-04-03T21:03:15.006035" elapsed="0.000956"/>
 </kw>
 <kw name="Dictionary Should Contain Key" owner="Collections">
 <arg>${response.json()}</arg>
-<arg>version</arg>
+<arg>user_id</arg>
 <doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.294649" elapsed="0.001061"/>
+<status status="PASS" start="2026-04-03T21:03:15.007512" elapsed="0.000961"/>
 </kw>
-<status status="PASS" start="2026-03-23T13:42:55.261404" elapsed="0.034765"/>
-</test>
-<test id="s1-s1-t2" name="Unknown Route Returns 404 Json" line="15">
-<kw name="Get Endpoint" owner="api_common">
-<kw name="GET On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.305440" level="INFO">GET Request : url=http://localhost:3000/does-not-exist 
- path_url=/does-not-exist 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${response.json()}</arg>
+<arg>username</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-04-03T21:03:15.009071" elapsed="0.000949"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response.json()['username']}</arg>
+<arg>${PLAIN_USERNAME}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-03T21:03:15.010524" elapsed="0.001289"/>
+</kw>
+<kw name="Delete Crypto Test User" type="TEARDOWN">
+<kw name="Delete Endpoint" owner="api_common">
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-04-03T21:03:15.025289" level="INFO">DELETE Request : url=http://localhost:3000/api/users/11 
+ path_url=/api/users/11 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
  body=None 
  </msg>
-<msg time="2026-03-23T13:42:55.305583" level="INFO">GET Response : url=http://localhost:3000/does-not-exist 
- status=404, reason=Not Found 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '59', 'ETag': 'W/"3b-8LiUNShH29koA3f7PV5cmOdHlYI"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body={"error":"Reitti ei ole olemassa","path":"/does-not-exist"} 
- </msg>
-<msg time="2026-03-23T13:42:55.305759" level="INFO">${response} = &lt;Response [404]&gt;</msg>
-<var>${response}</var>
-<arg>backend</arg>
-<arg>${endpoint}</arg>
-<arg>expected_status=any</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.298787" elapsed="0.007009"/>
-</kw>
-<return>
-<value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.305908" elapsed="0.000076"/>
-</return>
-<msg time="2026-03-23T13:42:55.306195" level="INFO">${response} = &lt;Response [404]&gt;</msg>
-<var>${response}</var>
-<arg>/does-not-exist</arg>
-<status status="PASS" start="2026-03-23T13:42:55.298170" elapsed="0.008060"/>
-</kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.308155" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${response.status_code}</arg>
-<arg>404</arg>
-<doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.306738" elapsed="0.001607"/>
-</kw>
-<kw name="Response Should Be Json" owner="api_common">
-<kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.310018" level="INFO">${content_type} = application/json; charset=utf-8</msg>
-<var>${content_type}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.309364" elapsed="0.000700"/>
-</kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${content_type}</arg>
-<arg>application/json</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.310228" elapsed="0.000463"/>
-</kw>
-<arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.308918" elapsed="0.001876"/>
-</kw>
-<kw name="Dictionary Should Contain Key" owner="Collections">
-<arg>${response.json()}</arg>
-<arg>error</arg>
-<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.311204" elapsed="0.000706"/>
-</kw>
-<kw name="Dictionary Should Contain Key" owner="Collections">
-<arg>${response.json()}</arg>
-<arg>path</arg>
-<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.312790" elapsed="0.001217"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.297049" elapsed="0.018047"/>
-</test>
-<test id="s1-s1-t3" name="Users Endpoint Is Reachable" line="22">
-<kw name="Get Endpoint" owner="api_common">
-<kw name="GET On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.328014" level="INFO">GET Request : url=http://localhost:3000/api/users 
- path_url=/api/users 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
- </msg>
-<msg time="2026-03-23T13:42:55.328148" level="INFO">GET Response : url=http://localhost:3000/api/users 
+<msg time="2026-04-03T21:03:15.025462" level="INFO">DELETE Response : url=http://localhost:3000/api/users/11 
  status=200, reason=OK 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '181', 'ETag': 'W/"b5-quZ2cEADqFmergJvgREfWosPFkc"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body=[{"user_id":3,"username":"mike_wilson","email":"mike@example.com","password":"password789","age":25,"created_at":"2026-02-11T10:10:27.000Z","updated_at":"2026-02-11T10:10:27.000Z"}] 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '67', 'ETag': 'W/"43-ZwEfxB4Y8Ub4Ko83bik/C5oUpyM"', 'Date': 'Fri, 03 Apr 2026 18:03:15 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"message":"Käyttäjä poistettu onnistuneesti.","affectedRows":1} 
  </msg>
-<msg time="2026-03-23T13:42:55.328388" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<msg time="2026-04-03T21:03:15.025679" level="INFO">${response} = &lt;Response [200]&gt;</msg>
 <var>${response}</var>
 <arg>backend</arg>
 <arg>${endpoint}</arg>
 <arg>expected_status=any</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.318749" elapsed="0.009678"/>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-03T21:03:15.016270" elapsed="0.009595"/>
 </kw>
 <return>
 <value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.328534" elapsed="0.000056"/>
+<status status="PASS" start="2026-04-03T21:03:15.025982" elapsed="0.000196"/>
 </return>
-<msg time="2026-03-23T13:42:55.328779" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<msg time="2026-04-03T21:03:15.026570" level="INFO">${response} = &lt;Response [200]&gt;</msg>
 <var>${response}</var>
-<arg>/api/users</arg>
-<status status="PASS" start="2026-03-23T13:42:55.317932" elapsed="0.010903"/>
+<arg>/api/users/${CRYPTO_USER_ID}</arg>
+<status status="PASS" start="2026-04-03T21:03:15.015212" elapsed="0.011660"/>
 </kw>
-<kw name="Status Should Be One Of" owner="api_common">
-<kw name="Convert To Integer" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.331487" level="INFO">${actual} = 200</msg>
-<var>${actual}</var>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-04-03T21:03:15.028330" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
 <arg>${response.status_code}</arg>
-<doc>Converts the given item to an integer number.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.330511" elapsed="0.001032"/>
-</kw>
-<for flavor="IN">
-<iter>
-<kw name="Convert To Integer" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.332868" level="INFO">${expected} = 200</msg>
-<var>${expected}</var>
-<arg>${status}</arg>
-<doc>Converts the given item to an integer number.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.332202" elapsed="0.000752"/>
-</kw>
-<if>
-<branch type="IF" condition="${actual} == ${expected}">
-<return>
-<status status="PASS" start="2026-03-23T13:42:55.333844" elapsed="0.000094"/>
-</return>
-<status status="PASS" start="2026-03-23T13:42:55.333232" elapsed="0.000797"/>
-</branch>
-<status status="PASS" start="2026-03-23T13:42:55.333151" elapsed="0.000939"/>
-</if>
-<var name="${status}">200</var>
-<status status="PASS" start="2026-03-23T13:42:55.332040" elapsed="0.002121"/>
-</iter>
-<var>${status}</var>
-<value>@{allowed_statuses}</value>
-<status status="PASS" start="2026-03-23T13:42:55.331678" elapsed="0.002565"/>
-</for>
-<kw name="Fail" owner="BuiltIn">
-<arg>${allowed_statuses} does not contain value ${actual}.</arg>
-<doc>Fails the test with the given message and optionally alters its tags.</doc>
-<status status="NOT RUN" start="2026-03-23T13:42:55.334521" elapsed="0.000057"/>
-</kw>
-<arg>${response}</arg>
 <arg>200</arg>
-<arg>500</arg>
-<status status="PASS" start="2026-03-23T13:42:55.329748" elapsed="0.004991"/>
-</kw>
-<kw name="Response Should Be Json" owner="api_common">
-<kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.337426" level="INFO">${content_type} = application/json; charset=utf-8</msg>
-<var>${content_type}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.336199" elapsed="0.001300"/>
-</kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${content_type}</arg>
-<arg>application/json</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.337751" elapsed="0.000632"/>
-</kw>
-<arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.335484" elapsed="0.003040"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.316141" elapsed="0.022781"/>
-</test>
-<test id="s1-s1-t4" name="Create User Without Required Fields Returns 400" line="27">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.341307" level="INFO">${payload} = {'username': 'test_only'}</msg>
-<var>${payload}</var>
-<arg>username=test_only</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.340539" elapsed="0.000821"/>
-</kw>
-<kw name="Post Endpoint With Json" owner="api_common">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.342872" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
-<var>${headers}</var>
-<arg>Content-Type=application/json</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.342403" elapsed="0.000513"/>
-</kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.347716" level="INFO">POST Request : url=http://localhost:3000/api/users 
- path_url=/api/users 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '25'} 
- body=b'{"username": "test_only"}' 
- </msg>
-<msg time="2026-03-23T13:42:55.347882" level="INFO">POST Response : url=http://localhost:3000/api/users 
- status=400, reason=Bad Request 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '66', 'ETag': 'W/"42-hNBW+2ZeqFehzU0rfoBftO6fSug"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body={"error":"Pakollisia kenttiä puuttuu: username, email, password"} 
- </msg>
-<msg time="2026-03-23T13:42:55.348120" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>backend</arg>
-<arg>${endpoint}</arg>
-<arg>json=${payload}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=any</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.343081" elapsed="0.005096"/>
-</kw>
-<return>
-<value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.348358" elapsed="0.000103"/>
-</return>
-<msg time="2026-03-23T13:42:55.348832" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>/api/users</arg>
-<arg>${payload}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.341923" elapsed="0.006972"/>
-</kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.350611" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${response.status_code}</arg>
-<arg>400</arg>
 <doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.349399" elapsed="0.001358"/>
+<status status="PASS" start="2026-04-03T21:03:15.027223" elapsed="0.001250"/>
 </kw>
-<kw name="Response Should Be Json" owner="api_common">
-<kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.353293" level="INFO">${content_type} = application/json; charset=utf-8</msg>
-<var>${content_type}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.352143" elapsed="0.001507"/>
+<doc>Poistaa testikäyttäjän testin jälkeen.</doc>
+<status status="PASS" start="2026-04-03T21:03:15.014079" elapsed="0.014545"/>
 </kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${content_type}</arg>
-<arg>application/json</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.353979" elapsed="0.000701"/>
-</kw>
-<arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.351411" elapsed="0.003405"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.339713" elapsed="0.015693"/>
+<doc>Purkaa kryptatut tunnukset, luo testikäyttäjän,
+kirjautuu sisään ja varmistaa onnistumisen. Siivoa lopuksi.</doc>
+<status status="PASS" start="2026-04-03T21:03:13.996502" elapsed="1.032485"/>
 </test>
-<test id="s1-s1-t5" name="Create Medication Without Required Fields Returns 400" line="33">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.358198" level="INFO">${payload} = {'user_id': '1', 'name': 'Aspirin'}</msg>
-<var>${payload}</var>
-<arg>user_id=1</arg>
-<arg>name=Aspirin</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.357669" elapsed="0.000596"/>
-</kw>
-<kw name="Post Endpoint With Json" owner="api_common">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.359626" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
-<var>${headers}</var>
-<arg>Content-Type=application/json</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.359202" elapsed="0.000466"/>
-</kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.365311" level="INFO">POST Request : url=http://localhost:3000/api/medications 
- path_url=/api/medications 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '35'} 
- body=b'{"user_id": "1", "name": "Aspirin"}' 
- </msg>
-<msg time="2026-03-23T13:42:55.365443" level="INFO">POST Response : url=http://localhost:3000/api/medications 
- status=400, reason=Bad Request 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '73', 'ETag': 'W/"49-kmBLzbdthdN83yFkhhgJ34f2sxA"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body={"error":"Pakollisia kenttiä puuttuu: user_id, name, dosage, frequency"} 
- </msg>
-<msg time="2026-03-23T13:42:55.365638" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>backend</arg>
-<arg>${endpoint}</arg>
-<arg>json=${payload}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=any</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.359815" elapsed="0.005869"/>
-</kw>
-<return>
-<value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.365793" elapsed="0.000056"/>
-</return>
-<msg time="2026-03-23T13:42:55.366061" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>/api/medications</arg>
-<arg>${payload}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.358748" elapsed="0.007345"/>
-</kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.367801" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${response.status_code}</arg>
-<arg>400</arg>
-<doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.366473" elapsed="0.001460"/>
-</kw>
-<kw name="Response Should Be Json" owner="api_common">
-<kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.370209" level="INFO">${content_type} = application/json; charset=utf-8</msg>
-<var>${content_type}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.369311" elapsed="0.000959"/>
-</kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${content_type}</arg>
-<arg>application/json</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.370478" elapsed="0.000887"/>
-</kw>
-<arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.368602" elapsed="0.002999"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.356736" elapsed="0.015467"/>
-</test>
-<test id="s1-s1-t6" name="Create Exercise Without Required Fields Returns 400" line="39">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.374544" level="INFO">${payload} = {'user_id': '1', 'exercise_type': 'Running'}</msg>
-<var>${payload}</var>
-<arg>user_id=1</arg>
-<arg>exercise_type=Running</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.373914" elapsed="0.000694"/>
-</kw>
-<kw name="Post Endpoint With Json" owner="api_common">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.377727" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
-<var>${headers}</var>
-<arg>Content-Type=application/json</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.376338" elapsed="0.001465"/>
-</kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.382607" level="INFO">POST Request : url=http://localhost:3000/api/exercises 
- path_url=/api/exercises 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '44'} 
- body=b'{"user_id": "1", "exercise_type": "Running"}' 
- </msg>
-<msg time="2026-03-23T13:42:55.382758" level="INFO">POST Response : url=http://localhost:3000/api/exercises 
- status=400, reason=Bad Request 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '96', 'ETag': 'W/"60-+aXCENQ6OogLPOUg3Gc1SZspgZw"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body={"error":"Pakollisia kenttiä puuttuu: user_id, exercise_date, exercise_type, duration_minutes"} 
- </msg>
-<msg time="2026-03-23T13:42:55.382953" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>backend</arg>
-<arg>${endpoint}</arg>
-<arg>json=${payload}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=any</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.378112" elapsed="0.004877"/>
-</kw>
-<return>
-<value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.383096" elapsed="0.000058"/>
-</return>
-<msg time="2026-03-23T13:42:55.383513" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>/api/exercises</arg>
-<arg>${payload}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.375469" elapsed="0.008117"/>
-</kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.385260" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${response.status_code}</arg>
-<arg>400</arg>
-<doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.384120" elapsed="0.001291"/>
-</kw>
-<kw name="Response Should Be Json" owner="api_common">
-<kw name="Get From Dictionary" owner="Collections">
-<msg time="2026-03-23T13:42:55.387907" level="INFO">${content_type} = application/json; charset=utf-8</msg>
-<var>${content_type}</var>
-<arg>${response.headers}</arg>
-<arg>Content-Type</arg>
-<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.386998" elapsed="0.000970"/>
-</kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${content_type}</arg>
-<arg>application/json</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.388183" elapsed="0.000586"/>
-</kw>
-<arg>${response}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.386085" elapsed="0.002810"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.373098" elapsed="0.016204"/>
-</test>
-<test id="s1-s1-t7" name="Create Entry Without Required Fields Returns 400" line="45">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.391316" level="INFO">${payload} = {'user_id': '1'}</msg>
-<var>${payload}</var>
-<arg>user_id=1</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.390810" elapsed="0.000550"/>
-</kw>
-<kw name="Post Endpoint With Json" owner="api_common">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.392552" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
-<var>${headers}</var>
-<arg>Content-Type=application/json</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.392178" elapsed="0.000413"/>
-</kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2026-03-23T13:42:55.396752" level="INFO">POST Request : url=http://localhost:3000/api/entries 
- path_url=/api/entries 
- headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '16'} 
- body=b'{"user_id": "1"}' 
- </msg>
-<msg time="2026-03-23T13:42:55.396880" level="INFO">POST Response : url=http://localhost:3000/api/entries 
- status=400, reason=Bad Request 
- headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Content-Type': 'text/plain; charset=utf-8', 'Content-Length': '11', 'ETag': 'W/"b-EFiDB1U+dmqzx9Mo2UjcZ1SJPO8"', 'Date': 'Mon, 23 Mar 2026 11:42:55 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
- body=Bad Request 
- </msg>
-<msg time="2026-03-23T13:42:55.397049" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>backend</arg>
-<arg>${endpoint}</arg>
-<arg>json=${payload}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=any</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.392731" elapsed="0.004353"/>
-</kw>
-<return>
-<value>${response}</value>
-<status status="PASS" start="2026-03-23T13:42:55.397192" elapsed="0.000056"/>
-</return>
-<msg time="2026-03-23T13:42:55.397424" level="INFO">${response} = &lt;Response [400]&gt;</msg>
-<var>${response}</var>
-<arg>/api/entries</arg>
-<arg>${payload}</arg>
-<status status="PASS" start="2026-03-23T13:42:55.391792" elapsed="0.005661"/>
-</kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-23T13:42:55.398643" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${response.status_code}</arg>
-<arg>400</arg>
-<doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-23T13:42:55.397853" elapsed="0.000875"/>
-</kw>
-<status status="PASS" start="2026-03-23T13:42:55.390057" elapsed="0.009061"/>
-</test>
-<doc>API smoke and validation tests for Express MVC health app.</doc>
-<status status="PASS" start="2026-03-23T13:42:54.994215" elapsed="0.405970"/>
-</suite>
-<status status="PASS" start="2026-03-23T13:42:54.896617" elapsed="0.505207"/>
+<doc>Tehtävä 6 – Kirjautumistesti jossa sekä käyttäjätunnus että
+salasana on kryptattu käyttäen CryptoLibrarya (NaCl/PyNaCl).
+Kryptatut arvot alkavat etuliitteellä "crypt:" ja puretaan
+automaattisesti testin ajon aikana yksityisavaimella.</doc>
+<status status="PASS" start="2026-04-03T21:03:13.047808" elapsed="1.983029"/>
 </suite>
 <statistics>
 <total>
-<stat pass="7" fail="0" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Tests" id="s1" pass="7" fail="0" skip="0">Tests</stat>
-<stat name="Api Homework" id="s1-s1" pass="7" fail="0" skip="0">Tests.Api Homework</stat>
+<stat name="Login Crypto Test" id="s1" pass="1" fail="0" skip="0">Login Crypto Test</stat>
 </suite>
 </statistics>
 <errors>
