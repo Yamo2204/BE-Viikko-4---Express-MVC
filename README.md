@@ -77,60 +77,95 @@ PUT    /api/exercises/:id        - Paivita harjoitusta
 DELETE /api/exercises/:id        - Poista harjoitus
 ```
 
-## 4. Robot Framework - tehtava (tests + outputs)
+## 4. Robot Framework - tehtävä (tests + outputs)
 
-Projektissa on valmiiksi Robot Framework API -testit:
+Projektissa on Robot Framework -testit kansiossa `tests/` ja raportit kansiossa `outputs/`.
 
-- `tests/api_homework.robot`
-- `tests/resources/api_common.resource`
+Katso tarkempi dokumentaatio: [TESTAUS.md](TESTAUS.md)
 
-### Asenna Python testityokalut
+### Tehtävä 1
+
+Asensin Robot Framework -testiympäristön Python-virtuaaliympäristöön:
 
 ```bash
-pip install -r requirements.txt
+python -m venv .venv
+.venv\Scripts\activate
+pip install robotframework robotframework-requests robotframework-browser robotframework-crypto robotframework-tidy
+rfbrowser init
 ```
 
-`requirements.txt` sisaltaa:
+Testitiedosto: [tests/api_homework.robot](tests/api_homework.robot)
 
-- `robotframework`
-- `robotframework-requests`
-- `robotframework-browser`
-- `robotframework-crypto`
-- `robotframework-tidy`
+### Tehtävä 2
 
-### Suorita testit
+Tein kirjautumistestin omalle terveyspäiväkirja-sovellukselleni eri skenaarioilla (tyhjä login, väärät tunnukset, oikeat tunnukset).
 
-Varmista ensin, etta Node-palvelin on kaynnissa (`npm start`).
+Testitiedosto: [tests/login_test.robot](tests/login_test.robot)
+
+### Tehtävä 3
+
+Tein Browser Library -testin web-lomakkeen kentille: dropdown, datalist, file upload, checkbox ja radio button.
+
+Testitiedosto: [tests/webform_test.robot](tests/webform_test.robot)
+
+### Tehtävä 4
+
+Tein testin uuden päiväkirjamerkinnän lisäämisestä (`POST /api/entries`). Testi luo testikäyttäjän, lisää merkinnän ja siivoo datan lopuksi.
+
+Testitiedosto: [tests/api_homework.robot](tests/api_homework.robot)
+
+### Tehtävä 5
+
+Tein kirjautumistestin joka lukee käyttäjätunnuksen ja salasanan `.env`-tiedostosta muuttujina `TEST_USERNAME` ja `TEST_PASSWORD`.
+
+Testitiedosto: [tests/login_env_test.robot](tests/login_env_test.robot)
+
+### Tehtävä 6
+
+Tein kirjautumistestin jossa käyttäjätunnus ja salasana on kryptattu CryptoLibraryn NaCl-avainparilla (`crypt:`-etuliite).
+
+Testitiedosto: [tests/login_crypto_test.robot](tests/login_crypto_test.robot)
+
+### Tehtävä 7
+
+Kaikki testien loki- ja raporttitiedostot ohjataan `-d`-lipulla erilliseen `outputs/`-kansioon:
 
 ```bash
 robot -d outputs tests
 ```
 
-### Muotoile Robot tiedostot (valinnainen)
+Tulostiedostot:
+
+| Tiedosto | Kuvaus |
+|----------|--------|
+| `outputs/report.html` | HTML-raportti testisuorituksesta |
+| `outputs/log.html` | Yksityiskohtainen loki |
+| `outputs/output.xml` | Koneluettava XML |
+
+### Tehtävä 8
+
+Projektin GitHub Pages -sivusto näyttää testiraportit selaimessa.
+
+- Etusivu: [index.html](index.html)
+- Report: [outputs/report.html](outputs/report.html)
+- Log: [outputs/log.html](outputs/log.html)
+
+GitHub Pages -osoite: `https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/`
+
+## 5. Testien ajaminen
+
+Käynnistä ensin backend:
 
 ```bash
-robotidy tests
+npm start
 ```
 
-### Tulokset
+Sitten aja testit:
 
-Robot luo raportit kansioon `outputs/`:
+```bash
+robot -d outputs tests
+```
 
-- `outputs/report.html`
-- `outputs/log.html`
-- `outputs/output.xml`
-
-Naita voi kayttaa tehtavan dokumentointiin (README + GitHub).
-
-## 5. Tehtavan dokumentointi
-
-- Testauksen raportti: `TESTAUS.md`
-- Robot tulostiedostot: `outputs/report.html`, `outputs/log.html`, `outputs/output.xml`
-
-Nopea tarkistus ennen palautusta:
-
-1. `tests/` kansio loytyy projektista.
-2. `outputs/` kansio loytyy projektista ja sisaltaa raportit testiajon jalkeen.
-3. `README.md` ja `TESTAUS.md` on paivitetty.
+Raportit löytyvät kansiosta `outputs/`.
 
 
