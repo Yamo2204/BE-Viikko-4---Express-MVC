@@ -124,6 +124,53 @@ Testitiedosto: [tests/login_crypto_test.robot](tests/login_crypto_test.robot)
 
 Generoin NaCl-avainparin CryptoLibraryn avulla. Käyttäjätunnus ja salasana on kryptattu ja tallennettu testiin `crypt:`-etuliitteellä. CryptoLibrary purkaa ne automaattisesti testin ajon aikana yksityisavaimella.
 
+## Tehtävä 7
+
+Ohjataan testien loki- ja raporttiedostot erilliseen `outputs/`-kansioon.
+
+Robot Framework tukee `-d`-lippua (output directory), jolla kaikki tulostiedostot ohjataan haluamaasi kansioon. Lisäsin `package.json`-tiedostoon `test:robot`-skriptin:
+
+```bash
+robot -d outputs tests
+```
+
+Tämä luo kansioon `outputs/` seuraavat tiedostot:
+
+| Tiedosto | Kuvaus |
+|----------|--------|
+| `outputs/report.html` | HTML-raportti testisuorituksesta |
+| `outputs/log.html` | Yksityiskohtainen loki jokaisesta testistä |
+| `outputs/output.xml` | Koneluettava XML-tulostiedosto |
+
+`outputs/`-kansio on lisätty `.gitignore`iin paikallisessa kehityksessä, mutta GitHub Pages -käyttöä varten tiedostot on tallennettu repositorioon.
+
+## Tehtävä 8
+
+Muokataan projektia niin, että testien HTML-raportit ovat luettavissa GitHub Pages -sivuston kautta.
+
+Loin repositorion juureen `index.html`-tiedoston, joka toimii GitHub Pages -sivuston etusivuna ja sisältää linkit Robot Frameworkin tuottamiin HTML-raportteihin.
+
+**GitHub Pages -asetukset:**
+
+1. Mene repositoriosi GitHub-sivulle → **Settings** → **Pages**
+2. Valitse **Source**: `Deploy from a branch`
+3. Valitse **Branch**: `main`, kansio `/` (root)
+4. Tallenna → GitHub luo sivuston osoitteeseen `https://<käyttäjänimi>.github.io/<repositorion-nimi>/`
+
+**Sivuston rakenne:**
+
+```
+index.html              ← GitHub Pages etusivu (linkit raportteihin)
+outputs/
+  report.html           ← Saatavilla: /outputs/report.html
+  log.html              ← Saatavilla: /outputs/log.html
+  output.xml
+```
+
+Raportit löytyvät:
+- **Report**: `https://<käyttäjänimi>.github.io/<repo>/outputs/report.html`
+- **Log**: `https://<käyttäjänimi>.github.io/<repo>/outputs/log.html`
+
 ## Oma huomio
 
 - API toimi ihan hyvin perus tapauksissa
@@ -132,3 +179,5 @@ Generoin NaCl-avainparin CryptoLibraryn avulla. Käyttäjätunnus ja salasana on
 - Selain testit meni nopeammin headless-tilassa
 - `.env`-tiedosto piilottaa tunnukset versionhallinnasta
 - CryptoLibrary suojaa tunnukset myös testitiedostoissa
+- `-d outputs` ohjaa kaikki Robot Framework -tulostiedostot yhteen kansioon
+- GitHub Pages tarjoaa helpon tavan jakaa HTML-raportit julkisesti

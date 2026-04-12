@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terveyspäiväkirja API – Testiraportit</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #58a6ff;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: #8b949e;
+      font-size: 1rem;
+    }
+
+    .cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      flex: 1 1 220px;
+      max-width: 280px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: #58a6ff;
+      transform: translateY(-3px);
+    }
+
+    .card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card h2 {
+      font-size: 1.15rem;
+      color: #e6edf3;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      color: #8b949e;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: #21262d;
+      color: #58a6ff;
+      border: 1px solid #30363d;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover {
+      background: #30363d;
+      border-color: #58a6ff;
+    }
+
+    .btn.primary {
+      background: #1f6feb;
+      color: #ffffff;
+      border-color: #1f6feb;
+    }
+
+    .btn.primary:hover {
+      background: #388bfd;
+      border-color: #388bfd;
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #484f58;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: #8b949e;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: #58a6ff; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Terveyspäiväkirja API</h1>
+    <p>Robot Framework – Testiraportit</p>
+  </header>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">📊</div>
+      <h2>Raportti</h2>
+      <p>Yhteenveto kaikista testisuorituksista, tuloksista ja tilastoista.</p>
+      <a class="btn primary" href="outputs/report.html">Avaa raportti</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📋</div>
+      <h2>Loki</h2>
+      <p>Yksityiskohtainen loki jokaisesta testistä, avainsanasta ja vasteesta.</p>
+      <a class="btn" href="outputs/log.html">Avaa loki</a>
+    </div>
+
+    <div class="card">
+      <div class="icon">📄</div>
+      <h2>Testausdokumentti</h2>
+      <p>Dokumentaatio testien toteutuksesta ja testiympäristöstä.</p>
+      <a class="btn" href="TESTAUS.md">Lue dokumentaatio</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Ajettu komennolla <code>robot -d outputs tests</code> &nbsp;|&nbsp;
+      <a href="https://github.com/robotframework/robotframework">Robot Framework</a>
+    </p>
+  </footer>
+
+</body>
+</html>
