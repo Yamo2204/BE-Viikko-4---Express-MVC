@@ -126,23 +126,34 @@ Generoin NaCl-avainparin CryptoLibraryn avulla. Käyttäjätunnus ja salasana on
 
 ## Tehtävä 7
 
-Ohjataan testien loki- ja raporttiedostot erilliseen `outputs/`-kansioon.
+KAIKKI testit (Tehtävät 1–6 ja 9) ohjataan yhteiseen loki- ja raporttitiedostoon käyttämällä `-d outputs`-lippua ja ajamalla koko `tests/`-kansio kerralla.
 
-Robot Framework tukee `-d`-lippua (output directory), jolla kaikki tulostiedostot ohjataan haluamaasi kansioon. Lisäsin `package.json`-tiedostoon `test:robot`-skriptin:
+Lisäsin `package.json`-tiedostoon `test:robot`-skriptin:
 
 ```bash
 robot -d outputs tests
 ```
 
-Tämä luo kansioon `outputs/` seuraavat tiedostot:
+Tämä ajaa **kaikki** `.robot`-tiedostot kansiosta `tests/` ja kokoaa niiden tulokset **yhteen** raporttiin:
 
-| Tiedosto | Kuvaus |
+| Tiedosto | Sisältö |
 |----------|--------|
-| `outputs/report.html` | HTML-raportti testisuorituksesta |
-| `outputs/log.html` | Yksityiskohtainen loki jokaisesta testistä |
+| `outputs/report.html` | Kaikkien testien yhteinen HTML-raportti |
+| `outputs/log.html` | Kaikkien testien yksityiskohtainen loki |
 | `outputs/output.xml` | Koneluettava XML-tulostiedosto |
 
-`outputs/`-kansio on lisätty `.gitignore`iin paikallisessa kehityksessä, mutta GitHub Pages -käyttöä varten tiedostot on tallennettu repositorioon.
+Testit sisältävät:
+
+| Testitiedosto | Tehtävä |
+|---------------|---------|
+| `api_homework.robot` | Tehtävät 1 & 4 |
+| `login_test.robot` | Tehtävä 2 |
+| `webform_test.robot` | Tehtävä 3 |
+| `login_env_test.robot` | Tehtävä 5 |
+| `login_crypto_test.robot` | Tehtävä 6 |
+| `backend_full_test.robot` | Tehtävä 9 |
+
+Kaikki tulokset näkyvät samassa `report.html`- ja `log.html`-tiedostossa.
 
 ## Tehtävä 8
 
@@ -167,9 +178,76 @@ outputs/
   output.xml
 ```
 
-Raportit löytyvät:
-- **Report**: `https://<käyttäjänimi>.github.io/<repo>/outputs/report.html`
-- **Log**: `https://<käyttäjänimi>.github.io/<repo>/outputs/log.html`
+Raportit löytyvät GitHub Pages -sivustolta:
+
+| Raportti | Linkki |
+|----------|--------|
+| Etusivu | [https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/) |
+| Report | [outputs/report.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/report.html) |
+| Log | [outputs/log.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/log.html) |
+
+## Tehtävä 9
+
+Tein kattavat backend-testit omalle terveyspäiväkirja-sovellukselleni.
+
+Testitiedosto: [tests/backend_full_test.robot](tests/backend_full_test.robot)
+
+Testasin kaikkien API-reittien täydellisen CRUD-syklin:
+
+### Käyttäjät (`/api/users`)
+- `POST` uusi käyttäjä → 201 + `user_id`
+- `POST` ilman `username` → 400
+- `POST` ilman `email` → 400
+- `POST` ilman `password` → 400
+- `GET` kaikki käyttäjät → 200
+- `GET` käyttäjä ID:llä → 200
+- `GET` olematon ID → 404
+- `PUT` päivitys → 200
+- `PUT` olematon ID → 404
+- `DELETE` poisto → 200
+- `DELETE` olematon ID → 404
+
+### Kirjautuminen (`/api/auth/login`)
+- Oikeat tunnukset → 200
+- Väärä salasana → 401
+- Tyhjä body → 400
+- Olematon käyttäjä → 401
+
+### Merkinnät (`/api/entries`)
+- `POST` uusi merkintä → 201 + `entry_id`
+- `POST` ilman `entry_date` → 400
+- `POST` ilman `user_id` → 400
+- `GET` kaikki → 200
+- `GET` ID:llä → 200
+- `GET` olematon → 404
+- `PUT` päivitys → 200
+- `DELETE` poisto → 200
+- `DELETE` olematon → 404
+
+### Harjoitukset (`/api/exercises`)
+- `POST` uusi harjoitus → 201 + `exercise_id`
+- `POST` puuttuvat kentät → 400
+- `GET` kaikki → 200
+- `GET` ID:llä → 200
+- `GET` olematon → 404
+- `GET` käyttäjän harjoitukset → 200
+- `PUT` päivitys → 200
+- `DELETE` poisto → 200
+
+### Lääkkeet (`/api/medications`)
+- `POST` uusi lääke → 201 + `medication_id`
+- `POST` puuttuvat kentät → 400
+- `GET` kaikki → 200
+- `GET` ID:llä → 200
+- `GET` olematon → 404
+- `GET` käyttäjän lääkkeet → 200
+- `PUT` päivitys → 200
+- `DELETE` poisto → 200
+- `DELETE` olematon → 404
+
+Jokainen testi luo oman testidatan ja siivoa sen testin lopuksi. Testit eivät vaadi valmista dataa tietokannassa.
+
+Yhteensä **35 testiä** kattaa kaikki pääreitit ja virhetilanteet.
 
 ## Oma huomio
 

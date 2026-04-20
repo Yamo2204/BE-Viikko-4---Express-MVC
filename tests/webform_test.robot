@@ -47,30 +47,30 @@ File Input Hyväksyy Tiedoston
 
 Checkbox Voidaan Valita
     [Documentation]    Tarkistaa, että checkbox voidaan valita (checked).
-    Check Checkbox    id=my-check-2-checkbox
-    ${valittu}=    Get Property    id=my-check-2-checkbox    checked
+    Check Checkbox    id=my-check-2
+    ${valittu}=    Get Property    id=my-check-2    checked
     Should Be True    ${valittu}
 
 Checkbox Voidaan Poistaa Valinta
     [Documentation]    Tarkistaa, että valittu checkbox voidaan poistaa (unchecked).
-    Check Checkbox    id=my-check-1-checkbox
-    Uncheck Checkbox    id=my-check-1-checkbox
-    ${ei_valittu}=    Get Property    id=my-check-1-checkbox    checked
+    Check Checkbox    id=my-check-1
+    Uncheck Checkbox    id=my-check-1
+    ${ei_valittu}=    Get Property    id=my-check-1    checked
     Should Not Be True    ${ei_valittu}
 
 Radio Button Voidaan Valita
     [Documentation]    Tarkistaa, että radio-nappi voidaan valita ja
     ...                sen valinta näkyy oikein.
-    Check Checkbox    id=my-radio-1-radio
-    ${valittu}=    Get Property    id=my-radio-1-radio    checked
+    Check Checkbox    id=my-radio-1
+    ${valittu}=    Get Property    id=my-radio-1    checked
     Should Be True    ${valittu}
 
 Vain Yksi Radio Button Kerralla Voidaan Valita
     [Documentation]    Tarkistaa, että useammasta radio-napista vain yksi on kerralla valittu.
-    Check Checkbox    id=my-radio-1-radio
-    Check Checkbox    id=my-radio-2-radio
-    ${radio1}=    Get Property    id=my-radio-1-radio    checked
-    ${radio2}=    Get Property    id=my-radio-2-radio    checked
+    Check Checkbox    id=my-radio-1
+    Check Checkbox    id=my-radio-2
+    ${radio1}=    Get Property    id=my-radio-1    checked
+    ${radio2}=    Get Property    id=my-radio-2    checked
     Should Not Be True    ${radio1}
     Should Be True    ${radio2}
 

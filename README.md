@@ -150,7 +150,13 @@ Projektin GitHub Pages -sivusto näyttää testiraportit selaimessa.
 - Report: [outputs/report.html](outputs/report.html)
 - Log: [outputs/log.html](outputs/log.html)
 
-GitHub Pages -osoite: `https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/`
+GitHub Pages -osoite: [https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/)
+
+| Raportti | Linkki |
+|----------|--------|
+| Etusivu | [GitHub Pages](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/) |
+| Report | [outputs/report.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/report.html) |
+| Log | [outputs/log.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/log.html) |
 
 ## 5. Testien ajaminen
 
