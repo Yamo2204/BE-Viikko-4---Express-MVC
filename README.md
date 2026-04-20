@@ -128,35 +128,42 @@ Testitiedosto: [tests/login_crypto_test.robot](tests/login_crypto_test.robot)
 
 ### Tehtävä 7
 
-Kaikki testien loki- ja raporttitiedostot ohjataan `-d`-lipulla erilliseen `outputs/`-kansioon:
+KAIKKI testit (Tehtävät 1–6 ja 9) ohjataan **yhteiseen** loki- ja raporttitiedostoon ajamalla koko `tests/`-kansio kerralla `-d outputs` -lipulla:
 
 ```bash
 robot -d outputs tests
 ```
 
-Tulostiedostot:
+Tämä ajaa kaikki `.robot`-tiedostot ja kokoaa **kaikkien** testien tulokset **yhteen** raporttiin:
+
+| Testitiedosto | Tehtävä |
+|---------------|---------|
+| `api_homework.robot` | Tehtävät 1 & 4 |
+| `login_test.robot` | Tehtävä 2 |
+| `webform_test.robot` | Tehtävä 3 |
+| `login_env_test.robot` | Tehtävä 5 |
+| `login_crypto_test.robot` | Tehtävä 6 |
+| `backend_full_test.robot` | Tehtävä 9 |
+
+Yhteinen tulostiedostot:
 
 | Tiedosto | Kuvaus |
 |----------|--------|
-| `outputs/report.html` | HTML-raportti testisuorituksesta |
-| `outputs/log.html` | Yksityiskohtainen loki |
+| `outputs/report.html` | Kaikkien testien yhteinen HTML-raportti |
+| `outputs/log.html` | Kaikkien testien yksityiskohtainen loki |
 | `outputs/output.xml` | Koneluettava XML |
 
 ### Tehtävä 8
 
-Projektin GitHub Pages -sivusto näyttää testiraportit selaimessa.
+Projektin GitHub Pages -sivusto näyttää **kaikkien testien** yhteisen raportin selaimessa.
 
-- Etusivu: [index.html](index.html)
-- Report: [outputs/report.html](outputs/report.html)
-- Log: [outputs/log.html](outputs/log.html)
-
-GitHub Pages -osoite: [https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/)
+## 🌐 [https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/)
 
 | Raportti | Linkki |
 |----------|--------|
 | Etusivu | [GitHub Pages](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/) |
-| Report | [outputs/report.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/report.html) |
-| Log | [outputs/log.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/log.html) |
+| Report (kaikki testit 1–6 + 9) | [outputs/report.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/report.html) |
+| Log (kaikki testit 1–6 + 9) | [outputs/log.html](https://Yamo2204.github.io/BE-Viikko-4---Express-MVC/outputs/log.html) |
 
 ## 5. Testien ajaminen
 
